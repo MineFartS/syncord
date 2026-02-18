@@ -32,19 +32,24 @@ def upload_file(path):
             
             for file in files:
 
-                file_path = os.path.join(root, file)
+                file_path:str = os.path.join(root, file).lower()
 
-                IGNORED = (not any(f in root for f in path_filters))
+                real_path:str = os.path.realpath(file_path).lower()
+
+                NOTIGNORED = (not any(f in root for f in path_filters))
                 
-                RESOLUTE = (file_path == os.path.realpath(file_path))
+                RESOLUTE = (file_path == real_path)
                 
                 # If the path does not contain any of the ignored strings
-                if IGNORED and RESOLUTE:
+                if NOTIGNORED and RESOLUTE:
 
                     print(f'Uploading: {file_path}')
 
-                    
                     partition_file(file_path, base.rstrip("/"))
+
+                else:
+
+                    print(f'Skipped: {NOTIGNORED=} | {RESOLUTE=} | {file_path}')
 
     else:
         
