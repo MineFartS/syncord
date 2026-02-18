@@ -2,8 +2,12 @@ from core.setup import setup, set_bot_token, set_encryption_key, set_guild_id
 from core.partition import partition_file, download_file_by_path
 from core.tui import start_dashboard, show_stats
 from core.db_manager import SQliteDB
+from core.setup import BASE_DIR
+from shutil import rmtree
 import argparse
 import os
+
+rmtree(BASE_DIR/"files", True)
 
 path_filters = [
     '\\__pycache__', 
