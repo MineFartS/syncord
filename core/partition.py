@@ -107,8 +107,8 @@ def partition_file(file_path, folder_name="default"):
 
         return upload_partitions(files, partition_uuid, file_path, folder_name)
     
-    except PermissionError:
-        pass
+    except PermissionError as e:
+        print(e)
 
 
 def upload_partitions(files: list[str], partition_uuid: str, file_path: str, folder_name: str):
@@ -121,12 +121,12 @@ def upload_partitions(files: list[str], partition_uuid: str, file_path: str, fol
     i = 0
     for file, msg_id in zip(files, message_ids):
         database.add_file(
-            partition_number=i,
-            partition_uuid=partition_uuid,
-            message_id=msg_id,
-            file_name=file_path.split("/")[-1].split("\\")[-1],
-            folder_name=folder_name,
-            file_size_bytes=os.stat(file).st_size,
+            partition_number = i,
+            partition_uuid = partition_uuid,
+            message_id = msg_id,
+            file_name = file_path.split("/")[-1].split("\\")[-1],
+            folder_name = folder_name,
+            file_size_bytes = os.stat(file).st_size
         )
         print(f"Saved partition {i} info to database.")
         i += 1
